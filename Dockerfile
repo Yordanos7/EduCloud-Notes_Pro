@@ -1,5 +1,8 @@
-# Use Node.js 20
-FROM node:20-alpine
+# Use Node.js 20 (debian-based for Prisma compatibility)
+FROM node:20
+
+# Install OpenSSL
+RUN apt-get update && apt-get install -y openssl
 
 # Set working directory
 WORKDIR /app
@@ -15,11 +18,14 @@ COPY packages ./packages
 # Install dependencies
 RUN npm install
 
-# Generate Prisma client
+# Generate Prisma client with correct binary
 RUN npm run db:generate
 
 # Build the server
 RUN npm run build -- --filter=server
+
+# Copy Prisma engines to dist folder
+RUN cp -r packages/db/generated node_modules/.prisma apps/server/dist/ || true
 
 # Expose port
 EXPOSE 3000
