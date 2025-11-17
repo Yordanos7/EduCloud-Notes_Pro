@@ -1,0 +1,23 @@
+name: cloudcb-server
+type: web
+instance_type: nano
+regions:
+  - was
+ports:
+  - port: 3000
+    protocol: http
+env:
+  - key: NODE_ENV
+    value: production
+  - key: PORT
+    value: "3000"
+routes:
+  - path: /
+    port: 3000
+build:
+  type: buildpack
+  buildpack:
+    builder: heroku/buildpacks:20
+  context: .
+  dockerfile: null
+run_command: node apps/server/dist/index.js

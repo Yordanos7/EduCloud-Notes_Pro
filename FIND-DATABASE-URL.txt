@@ -1,0 +1,83 @@
+╔══════════════════════════════════════════════════════════════╗
+║          HOW TO FIND YOUR DATABASE CONNECTION STRING        ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+STEP 1: Go to Supabase Dashboard
+┌────────────────────────────────────────────────────────────┐
+│  https://supabase.com/dashboard                            │
+│                                                            │
+│  Click on: cloudcb (your project)                         │
+└────────────────────────────────────────────────────────────┘
+
+
+STEP 2: Open Project Settings
+┌────────────────────────────────────────────────────────────┐
+│  Look at LEFT SIDEBAR (bottom)                             │
+│                                                            │
+│  Click: ⚙️ Project Settings                                │
+└────────────────────────────────────────────────────────────┘
+
+
+STEP 3: Click Database
+┌────────────────────────────────────────────────────────────┐
+│  In the settings menu (left side)                          │
+│                                                            │
+│  Click: Database                                           │
+└────────────────────────────────────────────────────────────┘
+
+
+STEP 4: Scroll Down
+┌────────────────────────────────────────────────────────────┐
+│  Scroll down the page                                      │
+│                                                            │
+│  Find section: "Connection string"                         │
+└────────────────────────────────────────────────────────────┘
+
+
+STEP 5: Find "Connection pooling"
+┌────────────────────────────────────────────────────────────┐
+│  Look for: "Connection pooling" section                    │
+│                                                            │
+│  Mode: Transaction                                         │
+│                                                            │
+│  You'll see a connection string like:                      │
+│  postgresql://postgres.lvemllffjyhxeziucakd:...           │
+└────────────────────────────────────────────────────────────┘
+
+
+STEP 6: Copy and Replace Password
+┌────────────────────────────────────────────────────────────┐
+│  The string will have: [YOUR-PASSWORD]                     │
+│                                                            │
+│  Replace with: yordi%400721                                │
+│  (Note: @ becomes %40)                                     │
+└────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════
+
+YOUR FINAL STRING SHOULD LOOK LIKE:
+
+postgresql://postgres.lvemllffjyhxeziucakd:yordi%400721@aws-0-us-east-1.pooler.supabase.com:6543/postgres
+
+(The exact region like "us-east-1" might be different)
+
+═══════════════════════════════════════════════════════════════
+
+
+❌ WRONG (What you found - this is API key):
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+✅ CORRECT (What you need - database URL):
+postgresql://postgres.lvemllffjyhxeziucakd:yordi%400721@...
+
+
+═══════════════════════════════════════════════════════════════
+
+ONCE YOU HAVE IT:
+1. Save it somewhere safe
+2. You'll use it in Koyeb as DATABASE_URL
+3. Continue with Koyeb deployment
+
+═══════════════════════════════════════════════════════════════
