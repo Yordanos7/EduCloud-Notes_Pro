@@ -2,29 +2,16 @@ databases:
   - name: cloudcb-db
     databaseName: cloudcb
     user: cloudcb
+    plan: free
 
 services:
-  - type: web
-    name: cloudcb-web
-    env: static
-    buildCommand: "npm install && npm run build -- --filter=web"
-    staticPublishPath: "./apps/web/build/client"
-    routes:
-      - type: rewrite
-        source: "/*"
-        destination: "/index.html"
-    envVars:
-      - key: VITE_API_URL
-        sync: false
-      - key: VITE_BETTER_AUTH_URL
-        sync: false
-
+  # Backend API
   - type: web
     name: cloudcb-server
-    env: node
-    buildCommand: "npm install && npm run db:generate && npm run db:migrate:deploy && npm run build -- --filter=server"
-    startCommand: "node apps/server/dist/index.js"
-    healthCheckPath: "/"
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run db:generate && npm run build
+    startCommand: npm run db:migrate:deploy && node apps/server/dist/index.js
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -32,11 +19,29 @@ services:
           property: connectionString
       - key: BETTER_AUTH_SECRET
         generateValue: true
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
       - key: BETTER_AUTH_URL
         sync: false
       - key: CORS_ORIGIN
         sync: false
       - key: WEB_URL
         sync: false
-      - key: PORT
-        value: 10000
+
+  # Frontend
+  - type: web
+    name: cloudcb-web
+    runtime: static
+    buildCommand: cd apps/web && npm install && npm run build
+    staticPublishPath: apps/web/build/client
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_BETTER_AUTH_URL
+        sync: false
