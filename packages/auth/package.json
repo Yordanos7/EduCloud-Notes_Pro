@@ -12,7 +12,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsdown"
+    "build": "tsc"
   },
   "devDependencies": {
     "tsdown": "^0.15.5",
