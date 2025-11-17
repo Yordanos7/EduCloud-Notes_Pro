@@ -21,11 +21,8 @@ RUN npm install
 # Generate Prisma client with correct binary
 RUN npm run db:generate
 
-# Build the server
+# Build the server (transpile only, no bundling)
 RUN npm run build -- --filter=server
-
-# Copy Prisma engines to dist folder
-RUN cp -r packages/db/generated node_modules/.prisma apps/server/dist/ || true
 
 # Expose port
 EXPOSE 3000
