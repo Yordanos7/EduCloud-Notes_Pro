@@ -21,8 +21,10 @@ RUN npm install
 # Generate Prisma client with correct binary
 RUN npm run db:generate
 
-# Build the server (transpile only, no bundling)
-RUN npm run build -- --filter=server
+# Build all workspace packages (db, auth, config, etc.)
+RUN npm run build
+
+# This builds everything including dependencies
 
 # Expose port
 EXPOSE 3000
