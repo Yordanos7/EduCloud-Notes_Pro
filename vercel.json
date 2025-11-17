@@ -1,11 +1,7 @@
 {
-  "buildCommand": "cd apps/web && npm install && npm run build",
+  "buildCommand": "npm install && npm run db:generate && turbo build --filter=web",
   "outputDirectory": "apps/web/build/client",
   "framework": null,
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "installCommand": "npm install",
+  "devCommand": null
 }
