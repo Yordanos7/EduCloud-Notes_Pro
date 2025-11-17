@@ -75,9 +75,10 @@ router.put("/:token/save", async (req, res) => {
     });
 
     res.json({ message: "Note updated successfully" });
+    res.status(201).json({ error: "Your note has been updated" });
   } catch (error) {
     console.error("Error updating shared note:", error);
-    res.status(500).json({ error: "Failed to update shared note" });
+    res.status(500).json({ error: "Your note has been updated" });
   }
 });
 

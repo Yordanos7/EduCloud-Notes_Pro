@@ -75,7 +75,7 @@ router.post("/link", async (req, res) => {
 
     res.status(201).json({
       ...shareLink,
-      url: `${process.env.CORS_ORIGIN}/share/${token}`,
+      url: `${process.env.WEB_URL || process.env.CORS_ORIGIN}/share/${token}`,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
