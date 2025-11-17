@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+  moduleFormat = "esm"
+  runtime = "nodejs"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  providerId    String?   @map("provider_id")
+  name          String?
+  email         String?   @unique
+  emailVerified Boolean?
+  image         String?
+  avatarUrl     String?   @map("avatar_url")
+  role          Role      @default(USER)
+  notes         Note[]    @relation("NoteOwner")
+  collaborators Collaborator[]
+  revisions     Revision[] @relation("UserRevision")
+  attachments   Attachment[]
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  settings      UserSettings?
+  audioLogos    AuditLog[] @relation("userAudit")
+  sessions      Session[]
+  accounts      Account[]
+  notebooks     NoteBook[]
+  invitedCollaborators Collaborator[] @relation("Invites")
+  createdShareLinks ShareLink[]
+  comments      Comment[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(uuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(uuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+model NoteBook {
+  id String @id @default(uuid())
+  owner User @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  title String
+  description  String?
+  visibility Visibility @default(PRIVATE)
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt     DateTime   @updatedAt  @map("updated_at")
+  notes Note[]
+}
+
+model Note {
+  id                 String        @id @default(uuid())
+  notebook           NoteBook?     @relation(fields: [notebookId], references: [id])
+  notebookId         String?       @map("notebook_id")
+  owner              User          @relation("NoteOwner", fields: [ownerId], references: [id])
+  ownerId            String        @map("owner_id")
+  title              String
+  content            String        // store HTML or delta
+  contentMime        String?       @map("content_mime")
+  summary            String?
+  isDeleted          Boolean       @default(false) @map("is_deleted")
+  pinned             Boolean       @default(false)
+  revisions          Revision[]
+  collaborators      Collaborator[]
+  attachments        Attachment[]
+  tags               NoteTag[]
+  comments           Comment[]
+  currentRevision    Revision?     @relation("CurrentRevision", fields: [currentRevisionId], references: [id])
+  currentRevisionId  String?       @unique @map("current_revision_id")
+  createdAt          DateTime      @default(now()) @map("created_at")
+  updatedAt          DateTime      @updatedAt @map("updated_at")
+  lastEditedAt       DateTime?
+  shareLinks         ShareLink[]
+}
+
+model Revision {
+  id          String   @id @default(uuid())
+  note        Note     @relation(fields: [noteId], references: [id])
+  noteId      String   @map("note_id")
+  editor      User     @relation("UserRevision", fields: [editorId], references: [id])
+  editorId    String   @map("editor_id")
+  content     String   @map("content_snapshot")
+  contentMime String?  @map("content_mime")
+  comment     String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  // optional relation for current revision from Note.currentRevision
+  CurrentRevisionNote Note? @relation("CurrentRevision")
+}
+
+model Collaborator {
+  id         String   @id @default(uuid())
+  note       Note     @relation(fields: [noteId], references: [id])
+  noteId     String   @map("note_id")
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @map("user_id")
+  role       CollaboratorRole @default(VIEWER)
+  invitedBy  User?    @relation("Invites", fields: [invitedById], references: [id])
+  invitedById String? @map("invited_by")
+  createdAt  DateTime @default(now()) @map("created_at")
+}
+
+model ShareLink {
+  id           String   @id @default(uuid())
+  note         Note     @relation(fields: [noteId], references: [id])
+  noteId       String   @map("note_id")
+  token        String   @unique
+  permission   SharePermission @default(VIEW)
+  createdBy    User     @relation(fields: [createdById], references: [id])
+  createdById  String   @map("created_by")
+  expiresAt    DateTime?
+  isProtected  Boolean  @default(false) @map("is_protected")
+  passwordHash String?  @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+  revokedAt    DateTime?
+}
+
+model Attachment {
+  id         String  @id @default(uuid())
+  note       Note    @relation(fields: [noteId], references: [id])
+  noteId     String  @map("note_id")
+  uploader   User    @relation(fields: [uploaderId], references: [id])
+  uploaderId String  @map("uploader_id")
+  filename   String
+  contentType String @map("content_type")
+  sizeBytes  Int     @map("size_bytes")
+  blobPath   String  @map("blob_path")
+  createdAt  DateTime @default(now()) @map("created_at")
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  notes     NoteTag[]
+}
+
+model NoteTag {
+  note   Note @relation(fields: [noteId], references: [id])
+  noteId String @map("note_id")
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  tagId  String @map("tag_id")
+
+  @@id([noteId, tagId])
+}
+
+model Comment {
+  id              String   @id @default(uuid())
+  note            Note     @relation(fields: [noteId], references: [id])
+  noteId          String   @map("note_id")
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String   @map("user_id")
+  parentCommentId String?  @map("parent_comment_id")
+  content         String
+  resolved        Boolean  @default(false)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  user       User?    @relation("userAudit", fields: [userId], references: [id])
+  userId     String?  @map("user_id")
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String?  @map("entity_id")
+  metadata   Json?    // JSONB column
+  createdAt  DateTime @default(now()) @map("created_at")
+}
+
+model UserSettings {
+  id         String  @id @default(uuid())
+  user       User    @relation(fields: [userId], references: [id])
+  userId     String  @unique @map("user_id")
+  theme      String?
+  preferences Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Visibility {
+  PRIVATE
+  TEAM
+  PUBLIC
+}
+
+enum CollaboratorRole {
+  VIEWER
+  EDITOR
+}
+
+enum SharePermission {
+  VIEW
+  EDIT
+}
