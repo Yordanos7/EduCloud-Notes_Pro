@@ -14,10 +14,5 @@ env:
 routes:
   - path: /
     port: 3000
-build:
-  type: buildpack
-  buildpack:
-    builder: heroku/buildpacks:20
-  context: .
-  dockerfile: null
+builder: buildpack
 run_command: node apps/server/dist/index.js

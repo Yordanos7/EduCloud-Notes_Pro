@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+.git
+.env
+.env.local
+*.log
+.turbo
+.vercel
+.railway
+MY-CREDENTIALS.txt
+*.md
+.gitignore
+.DS_Store
