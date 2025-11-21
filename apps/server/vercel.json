@@ -1,6 +1,0 @@
-{
-  "version": 2,
-  "buildCommand": "cd ../.. && npm install && npm run build && cd apps/server && npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "cd ../.. && npm install"
-}
