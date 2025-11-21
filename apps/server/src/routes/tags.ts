@@ -1,8 +1,6 @@
 import express from "express";
-import { PrismaClient } from "../../../../packages/db/generated/client.js";
+import prisma from "@cloudCB/db";
 import { z } from "zod";
-
-const prisma = new PrismaClient();
 
 const router = express.Router();
 

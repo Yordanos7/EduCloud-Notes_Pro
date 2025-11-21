@@ -1,8 +1,6 @@
 import express from "express";
-import { PrismaClient } from "../../../../packages/db/generated/client.js";
+import prisma from "@cloudCB/db";
 import crypto from "crypto";
-
-const prisma = new PrismaClient();
 const router = express.Router();
 
 // Update note by share token (public route - no auth required)
