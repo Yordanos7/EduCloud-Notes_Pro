@@ -3,16 +3,16 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./dist/*.js"
+    "./client": {
+      "types": "./generated/client.d.ts",
+      "default": "./generated/client.js"
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "echo 'No build needed for db package'",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
