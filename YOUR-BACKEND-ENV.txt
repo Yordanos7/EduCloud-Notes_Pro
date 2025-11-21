@@ -1,0 +1,46 @@
+# YOUR BACKEND ENVIRONMENT VARIABLES
+# Copy these EXACTLY to Vercel Backend Project
+
+DATABASE_URL=postgresql://postgres:yordi%400721@db.lvemllffjyhxeziucakd.supabase.co:5432/postgres
+
+BETTER_AUTH_SECRET=GENERATE_THIS_RUN_COMMAND_BELOW
+
+BETTER_AUTH_URL=https://edu-cloud-notes-pro-server.vercel.app/api/auth
+
+CORS_ORIGIN=https://edu-cloud-notes-pro-web.vercel.app
+
+WEB_URL=https://edu-cloud-notes-pro-web.vercel.app
+
+PORT=3000
+
+
+# ═══════════════════════════════════════════════════════════════
+# INSTRUCTIONS:
+# ═══════════════════════════════════════════════════════════════
+
+# 1. Generate BETTER_AUTH_SECRET by running this command in terminal:
+#    openssl rand -base64 32
+#    Then replace "GENERATE_THIS_RUN_COMMAND_BELOW" with the output
+
+# 2. Replace the URLs with your ACTUAL Vercel deployment URLs:
+#    - After you create backend project, update BETTER_AUTH_URL
+#    - After you create frontend project, update CORS_ORIGIN and WEB_URL
+
+# 3. Add these in Vercel:
+#    - Go to your backend project
+#    - Settings → Environment Variables
+#    - Add each variable
+#    - Select: Production, Preview, Development (all three)
+
+# ═══════════════════════════════════════════════════════════════
+# EXAMPLE WITH REAL URLs:
+# ═══════════════════════════════════════════════════════════════
+
+# If your backend is: https://my-backend-abc123.vercel.app
+# Then BETTER_AUTH_URL=https://my-backend-abc123.vercel.app/api/auth
+
+# If your frontend is: https://my-frontend-xyz789.vercel.app
+# Then CORS_ORIGIN=https://my-frontend-xyz789.vercel.app
+# And WEB_URL=https://my-frontend-xyz789.vercel.app
+
+# ═══════════════════════════════════════════════════════════════

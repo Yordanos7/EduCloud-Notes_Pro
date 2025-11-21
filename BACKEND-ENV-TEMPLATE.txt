@@ -1,0 +1,22 @@
+# Backend Environment Variables for Vercel
+# Copy these to your Vercel backend project settings
+
+DATABASE_URL=postgresql://postgres.xxxxx:password@aws-0-region.pooler.supabase.com:6543/postgres?pgbouncer=true
+
+BETTER_AUTH_SECRET=generate_this_with_openssl_rand_base64_32
+
+BETTER_AUTH_URL=https://edu-cloud-notes-pro-server.vercel.app/api/auth
+
+CORS_ORIGIN=https://edu-cloud-notes-pro-web.vercel.app
+
+WEB_URL=https://edu-cloud-notes-pro-web.vercel.app
+
+PORT=3000
+
+
+# INSTRUCTIONS:
+# 1. Replace DATABASE_URL with your Supabase connection string
+# 2. Generate BETTER_AUTH_SECRET: run "openssl rand -base64 32" in terminal
+# 3. Replace the URLs with your actual Vercel deployment URLs
+# 4. Add these in Vercel dashboard: Project Settings → Environment Variables
+# 5. Make sure to add them to "Production", "Preview", and "Development" environments

@@ -1,0 +1,31 @@
+# YOUR FRONTEND ENVIRONMENT VARIABLES
+# Copy these to Vercel Frontend Project
+
+VITE_API_URL=https://edu-cloud-notes-pro-server.vercel.app/api
+
+VITE_BETTER_AUTH_URL=https://edu-cloud-notes-pro-server.vercel.app/api/auth
+
+
+# ═══════════════════════════════════════════════════════════════
+# INSTRUCTIONS:
+# ═══════════════════════════════════════════════════════════════
+
+# 1. Replace the URLs with your ACTUAL backend Vercel URL
+#    (After you deploy backend, copy its URL)
+
+# 2. Add these in Vercel:
+#    - Go to your frontend project
+#    - Settings → Environment Variables
+#    - Add each variable
+#    - Select: Production, Preview, Development (all three)
+
+# ═══════════════════════════════════════════════════════════════
+# EXAMPLE WITH REAL URL:
+# ═══════════════════════════════════════════════════════════════
+
+# If your backend is: https://my-backend-abc123.vercel.app
+# Then:
+# VITE_API_URL=https://my-backend-abc123.vercel.app/api
+# VITE_BETTER_AUTH_URL=https://my-backend-abc123.vercel.app/api/auth
+
+# ═══════════════════════════════════════════════════════════════

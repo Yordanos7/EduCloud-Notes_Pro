@@ -1,0 +1,13 @@
+# Frontend Environment Variables for Vercel
+# Copy these to your Vercel frontend project settings
+
+VITE_API_URL=https://edu-cloud-notes-pro-server.vercel.app/api
+
+VITE_BETTER_AUTH_URL=https://edu-cloud-notes-pro-server.vercel.app/api/auth
+
+
+# INSTRUCTIONS:
+# 1. Replace the URLs with your actual backend Vercel deployment URL
+# 2. Add these in Vercel dashboard: Project Settings → Environment Variables
+# 3. Make sure to add them to "Production", "Preview", and "Development" environments
+# 4. After adding, trigger a new deployment for changes to take effect
