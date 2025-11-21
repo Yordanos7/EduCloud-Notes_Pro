@@ -8,6 +8,6 @@
     "composite": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "../db/generated/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
