@@ -50,9 +50,6 @@ app.use(
 
 app.use(express.json());
 
-// Handle preflight requests
-app.options("*", cors());
-
 // Auth routes (no auth middleware needed)
 app.use("/api/auth", toNodeHandler(auth));
 
