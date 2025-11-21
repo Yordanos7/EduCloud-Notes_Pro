@@ -2,17 +2,13 @@
   "name": "@cloudCB/auth",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./dist/*.js"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     }
   },
   "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "echo 'No build needed for auth package'"
   },
   "devDependencies": {
     "tsdown": "^0.15.5",
