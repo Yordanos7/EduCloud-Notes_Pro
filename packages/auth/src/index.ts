@@ -1,8 +1,6 @@
 import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { PrismaClient } from "../../db/generated/client.js";
-
-const prisma = new PrismaClient();
+import prisma from "@cloudCB/db";
 
 export const auth = betterAuth<BetterAuthOptions>({
   database: prismaAdapter(prisma, {
