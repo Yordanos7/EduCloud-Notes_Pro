@@ -54,7 +54,7 @@ router.put("/:token/save", async (req, res) => {
     }
 
     // Update the note
-    const updatedNote = await prisma.note.update({
+    await prisma.note.update({
       where: { id: shareLink.noteId },
       data: {
         title,
