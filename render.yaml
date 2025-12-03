@@ -34,7 +34,7 @@ services:
   - type: web
     name: cloudcb-web
     runtime: static
-    buildCommand: cd apps/web && npm install && npm run build
+    buildCommand: npm install && npm run build && cd apps/web && npm run build
     staticPublishPath: apps/web/build/client
     routes:
       - type: rewrite
